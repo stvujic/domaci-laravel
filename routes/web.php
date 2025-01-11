@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-Route::view("/", "welcome");
 Route::view("/about", "about");
-Route::view("/shop", "shop");
-Route::view("/contact", "contact");
+
+Route::get("/shop", [ShopController::class, "index"]);
+Route::get("/", [HomepageController::class, "index"]);
+Route::get("/contact", [ContactController::class, "index"]);
+//Route::view("/contact", "contact");

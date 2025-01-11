@@ -5,6 +5,13 @@
 @endsection
 
 @section("sadrzajStranice")
-    <p>Ovo je shop stranica</p>
+
+    @foreach($products as $singleProduct)
+        @if($singleProduct == "iPhone 14" || $singleProduct=="iPhone 13 pro")
+            <p>{{$singleProduct}} - SUPER SNIZENJE</p>
+        @else
+        <p>{{$singleProduct}}</p>
+        @endif
+    @endforeach
 @endsection
 
