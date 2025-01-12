@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductsModel;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
     public function index()
     {
-        $products = [
-            "iPhone 14", "Samsung A52s", "Samsung A30", "iPhone 13 pro"
-        ];
+        $products = ProductsModel::all();
         return view('shop', compact('products'));
     }
 }

@@ -6,12 +6,12 @@
 
 @section("sadrzajStranice")
 
-    @foreach($products as $singleProduct)
-        @if($singleProduct == "iPhone 14" || $singleProduct=="iPhone 13 pro")
-            <p>{{$singleProduct}} - SUPER SNIZENJE</p>
-        @else
-        <p>{{$singleProduct}}</p>
-        @endif
-    @endforeach
+@foreach($products as $product)
+    <div>
+        <p>{{$product-> name}}</p>
+        <p>{{$product-> description}}</p>
+    </div>
+@endforeach
+
 @endsection
 
