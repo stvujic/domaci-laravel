@@ -13,6 +13,10 @@
         <p>Dobar dan!</p>
     @endif
 
+    @foreach($products as $product)
+        <p>{{$product->name}}</p>
+    @endforeach
+
     <p>Trenutno sati je {{$sat}}</p>
     <p>Trenutno vreme je {{$trenutnoVreme}}</p>
 @endsection
