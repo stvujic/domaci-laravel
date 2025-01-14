@@ -8,21 +8,28 @@
         <table class="table table-bordered table-hover table-striped">
             <thead class="table-dark">
             <tr>
+                <th>ID</th>
                 <th>Ime</th>
                 <th>Opis</th>
                 <th>Količina</th>
                 <th>Cena</th>
                 <th>Slika</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($products as $product)
+            @foreach($allProducts as $product)
                 <tr>
+                    <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->description }}</td>
                     <td>{{ $product->amount }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->image }}</td>
+                    <td>
+                        <a href="/admin/delete-product/{{$product->id}}" class="btn btn-danger">Obrisi</a>
+                        <a class="btn btn-primary">Edituj</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

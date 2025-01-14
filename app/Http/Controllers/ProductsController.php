@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+
     public function saveProduct(Request $request)
     {
         $request->validate([
@@ -25,13 +26,26 @@ class ProductsController extends Controller
             "image" =>$request->get("image"),
         ]);
 
-        return redirect("/admin/products");
+        return redirect("/admin/all-products");
     }
 
-    public function getAllProducts()
+    public function index()
     {
-        $products = ProductsModel::all();
-        return view("allProducts", compact("products"));
+        $allProducts = ProductsModel::all();
+        return view("allProducts", compact("allProducts"));
     }
 
+    public function delete($product)
+    {
+        $singleProduct = ProductsModel::where(['id'=> $product])->first();
+
+        if($singleProduct === null)
+        {
+            die("OVAJ PROIZVOD NE POSTOJI");
+        }
+
+        $singleProduct->delete();
+
+        return redirect()->back();
+    }
 }
