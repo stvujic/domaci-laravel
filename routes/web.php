@@ -14,7 +14,10 @@ Route::get("/contact", [ContactController::class, "index"]);
 
 Route::get("/admin/all-contacts", [ContactController::class, "getAllContacts"]);
 Route::get("/admin/all-products", [ProductsController::class, "index"]);
+
+
 Route::get("/admin/delete-product/{product}", [ProductsController::class, "delete"]);
+Route::get("/admin/delete-contact/{contact}", [ContactController::class, "delete"]);
 
 
 Route::view("/admin/add-product", "addProduct");
