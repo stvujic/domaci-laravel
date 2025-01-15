@@ -11,7 +11,7 @@ class ProductsController extends Controller
     public function saveProduct(Request $request)
     {
         $request->validate([
-            "name"=>"required",
+            "name"=>"required|unique:products",
             "description"=>"required",
             "amount"=>"required|int|min:0",
             "price"=>"required|min:0",
@@ -26,7 +26,7 @@ class ProductsController extends Controller
             "image" =>$request->get("image"),
         ]);
 
-        return redirect("/admin/all-products");
+        return redirect()->route("sviProizvodi");
     }
 
     public function index()
