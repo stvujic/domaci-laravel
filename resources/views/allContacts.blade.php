@@ -24,7 +24,7 @@
                     <td>{{ $contact->message }}</td>
                     <td>
                         <a href="{{route("obrisiKontakt",["contact" =>$contact->id])}}" class="btn btn-danger">Obrisi</a>
-                        <a class="btn btn-primary">Edituj</a>
+                        <a href="{{route("contact.single", ["id"=>$contact->id])}}" class="btn btn-primary">Edituj</a>
                     </td>
                 </tr>
             @endforeach

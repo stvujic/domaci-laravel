@@ -29,3 +29,12 @@ Route::post("/send-contact", [ContactController::class, "sendContact"]);
 Route::post("/admin/save-product", [ProductsController::class, "saveProduct"])
     ->name("snimanjeOglasa");
 
+Route::get("/admin/product/edit/{id}", [ProductsController::class, "singleProduct"])
+    ->name("product.single");
+Route::post("/admin/product/save/{id}", [ProductsController::class, "edit"])
+    ->name("product.save");
+
+Route::get("/admin/contact/edit/{id}", [ContactController::class, "singleContact"])
+    ->name("contact.single");
+Route::post("/admin/contact/save/{id}", [ContactController::class, "edit"])
+    ->name("contact.save");
