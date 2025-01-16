@@ -49,26 +49,20 @@ class ProductsController extends Controller
         return redirect()->back();
     }
 
-    public function singleProduct(Request $request, $id)
+    /*
+    $id ne označava da on mora da trazi po id,
+    nego može da se zove kako god hoćeš,
+    ali će on uvek tražiti po id i u njemu će biti sadržani svi podaci koji postoje vezano za taj objekat,
+    ali mora da bude isti sa nazivom parametra
+    u ruti: Route::get("/admin/product/edit/{id}", [ProductsController::class, "singleProduct"]);
+    */
+    public function singleProduct(Request $request, ProductsModel $product)
     {
-        $product = ProductsModel::where(['id'=> $id])->first();
-
-        if($product === null)
-        {
-            die("OVAJ PROIZVOD NE POSTOJI");
-        }
         return view("products.edit", compact("product"));
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, ProductsModel $product)
     {
-        $product = ProductsModel::where(['id'=> $id])->first();
-
-        if($product === null)
-        {
-            die("OVAJ PROIZVOD NE POSTOJI");
-        }
-
         $product->name = $request->get("name");
         $product->description = $request->get("description");
         $product->amount = $request->get("amount");
