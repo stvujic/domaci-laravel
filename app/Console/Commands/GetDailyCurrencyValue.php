@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ExchangeRates;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class GetDailyCurrencyValue extends Command
@@ -26,12 +28,21 @@ class GetDailyCurrencyValue extends Command
      */
     public function handle()
     {
-        $currencies = ["usd", "eur"];
 
-        foreach($currencies as $currency)
+        foreach(ExchangeRates::AVAILABLE_CURRENCIES as $currency)
         {
+            $todayCurrency = ExchangeRates::getCurrencyForToday($currency);
+
+            if($todayCurrency !== null)
+            {
+                continue;
+            }
+
             $response = Http::get("https://kurs.resenje.org/api/v1/currencies/$currency/rates/today");
-            var_dump($response->json()["exchange_middle"]);
+            ExchangeRates::create([
+                'currency' => $currency,
+                'value' => $response->json()["exchange_middle"]
+            ]);
         }
     }
 }

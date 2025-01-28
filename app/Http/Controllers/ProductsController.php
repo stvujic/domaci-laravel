@@ -2,29 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditProductRequest;
+use App\Http\Requests\SaveProductRequest;
 use App\Models\ProductsModel;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-
-    public function saveProduct(Request $request)
+    private $productRepo;
+    public function __construct()
     {
-        $request->validate([
-            "name"=>"required|unique:products",
-            "description"=>"required",
-            "amount"=>"required|int|min:0",
-            "price"=>"required|min:0",
-            "image"=>"required",
-        ]);
-
-        ProductsModel::create([
-            "name" =>$request->get("name"),
-            "description" =>$request->get("description"),
-            "amount" =>$request->get("amount"),
-            "price" =>$request->get("price"),
-            "image" =>$request->get("image"),
-        ]);
+        $this->productRepo = new ProductRepository();
+    }
+    public function saveProduct(SaveProductRequest $request)
+    {
+        $this->productRepo->createNew($request);
 
         return redirect()->route("sviProizvodi");
     }
@@ -35,16 +28,9 @@ class ProductsController extends Controller
         return view("allProducts", compact("allProducts"));
     }
 
-    public function delete($product)
+    public function delete(ProductsModel $product)
     {
-        $singleProduct = ProductsModel::where(['id'=> $product])->first();
-
-        if($singleProduct === null)
-        {
-            die("OVAJ PROIZVOD NE POSTOJI");
-        }
-
-        $singleProduct->delete();
+        $product->delete();
 
         return redirect()->back();
     }
@@ -56,20 +42,14 @@ class ProductsController extends Controller
     ali mora da bude isti sa nazivom parametra
     u ruti: Route::get("/admin/product/edit/{id}", [ProductsController::class, "singleProduct"]);
     */
-    public function singleProduct(Request $request, ProductsModel $product)
+    public function singleProduct(ProductsModel $product)
     {
         return view("products.edit", compact("product"));
     }
 
-    public function edit(Request $request, ProductsModel $product)
+    public function edit(EditProductRequest $request, ProductsModel $product)
     {
-        $product->name = $request->get("name");
-        $product->description = $request->get("description");
-        $product->amount = $request->get("amount");
-        $product->price = $request->get("price");
-
-        $product-> save();
-
+        $this->productRepo->editProduct($product, $request);
         return redirect("/admin/all-products");
     }
 }

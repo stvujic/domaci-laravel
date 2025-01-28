@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendContactRequest;
 use App\Models\ContactModel;
+use App\Repositories\ContactRepository;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    private $contactRepo;
+    public function __construct()
+    {
+        $this->contactRepo = new ContactRepository();
+    }
     public function index()
     {
         return view('contact');
     }
 
-    public function delete($contact)
+    public function delete(ContactModel $contact)
     {
-        $singleContact = ContactModel::where(['id' => $contact])->first();
-
-        if($singleContact === null)
-        {
-            die("Ovaj kontakt ne postoji");
-        }
-        $singleContact->delete();
+        $contact->delete();
         return redirect()->back();
     }
     public function getAllContacts()
@@ -28,20 +29,9 @@ class ContactController extends Controller
         $allContacts = ContactModel::all();
         return view('allContacts', compact('allContacts'));
     }
-    public function sendContact(Request $request)
+    public function sendContact(SendContactRequest $request)
     {
-        $request->validate([
-            "email" => "required|string",
-            "subject" => "required|string",
-            "description" => "required|string|min:5",
-        ]);
-
-        ContactModel::create([
-            "email" => $request->get("email"),
-            "subject" => $request->get("subject"),
-            "message" => $request->get("description"),
-        ]);
-
+        $this->contactRepo->createNew($request);
         return redirect("/shop");
     }
 
