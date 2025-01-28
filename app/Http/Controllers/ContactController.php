@@ -61,6 +61,6 @@ class ContactController extends Controller
         $contact->message = $request->get("message");
 
         $contact->save();
-        return redirect("/admin/all-contacts");
+        return redirect()->route("contact.all");
     }
 }

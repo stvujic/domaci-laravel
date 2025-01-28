@@ -19,7 +19,7 @@ class ProductsController extends Controller
     {
         $this->productRepo->createNew($request);
 
-        return redirect()->route("sviProizvodi");
+        return redirect()->route("products.all");
     }
 
     public function index()
@@ -50,6 +50,6 @@ class ProductsController extends Controller
     public function edit(EditProductRequest $request, ProductsModel $product)
     {
         $this->productRepo->editProduct($product, $request);
-        return redirect("/admin/all-products");
+        return redirect()->route("sviProizvodi");
     }
 }

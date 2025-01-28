@@ -17,7 +17,7 @@
         <p>{{$product->name}}</p>
     @endforeach
 
-    <form method="POST" action="/send-contact">
+    <form method="POST" action="{{route("contact.send")}}">
 
         @if($errors->any())
         <p>Greska:{{$errors->first()}}</p>
