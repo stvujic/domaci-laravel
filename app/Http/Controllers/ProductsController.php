@@ -15,17 +15,23 @@ class ProductsController extends Controller
     {
         $this->productRepo = new ProductRepository();
     }
-    public function saveProduct(SaveProductRequest $request)
-    {
-        $this->productRepo->createNew($request);
-
-        return redirect()->route("products.all");
-    }
 
     public function index()
     {
         $allProducts = ProductsModel::all();
         return view("allProducts", compact("allProducts"));
+    }
+
+    public function permalink(ProductsModel $product)
+    {
+        return view("products.permalink", compact("product"));
+    }
+
+    public function saveProduct(SaveProductRequest $request)
+    {
+        $this->productRepo->createNew($request);
+
+        return redirect()->route("products.all");
     }
 
     public function delete(ProductsModel $product)
@@ -52,4 +58,6 @@ class ProductsController extends Controller
         $this->productRepo->editProduct($product, $request);
         return redirect()->route("sviProizvodi");
     }
+
+
 }

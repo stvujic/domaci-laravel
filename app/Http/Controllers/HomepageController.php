@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsModel;
-use Illuminate\Http\Request;
+
 
 class HomepageController extends Controller
 {
